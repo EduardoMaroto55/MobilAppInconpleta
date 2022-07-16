@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.pro.data.Weather
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +30,14 @@ class MainActivity : AppCompatActivity() {
             Request.Method.GET,url,null,
             {
                 val datos = it.getJSONObject("main")
-                Log.d("Main Activity",it.toString())
+                val temp = datos.getDouble("temp")
+                val feelsLike = datos.getDouble("feels_like")
+                val pressure = datos.getInt("pressure")
+                val humidity=datos.getInt("humidity")
+                val minTem=datos.getDouble("temp_min")
+                val maxTem=datos.getDouble("temp_max")
+                var weather = Weather(temp,feelsLike,pressure,humidity,minTem,maxTem)
+                Log.d("Main Activity",weather.temp.toString())
                 Toast.makeText(this, "Data received: "+ datos.toString(), Toast.LENGTH_LONG).show()
             },{
                 Log.d("Main Activity Error:",it.toString())
